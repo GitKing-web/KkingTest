@@ -1,6 +1,7 @@
 const { Router } = require("express");
-
+const User = require('../models/model.User');
 const router = Router();
+
 //  GET request
 // home
 router.get("/", (req, res) => {
@@ -29,12 +30,37 @@ router.get("/cash/:id", (req, res) => {
 
 // POST request
 // login
-router.post("/login", (req, res) => {
-  console.log(req.body);
-  return res.status(200).send(req.body);
+router.post("/login", async (req, res) => {
+  try {
+    const { phone, password } = req.body;
+    const user = await User.findOne({ phone })
+    if(!user){
+      console.log('Invalid credentials.');
+      return;
+    }
+    if(password !== user.password){
+      console.log('Invalid credentials');
+      return;
+    }
+  return console.log('login successful...');
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 // register
-router.get("/register", (req, res) => {});
+router.post("/register", async(req, res) => {
+  try {
+    const { phone, password } = req.body;
+    const users = new User({
+      phone, password
+    })
+
+    const user = await users.save();
+    console.log(user);
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 module.exports = router;
