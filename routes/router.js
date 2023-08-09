@@ -40,7 +40,7 @@ router.post("/login", async (req, res) => {
     if (password !== user.password) {
       return res.status(400).send({ message: "Invalid credentials" });
     }
-    return res.status(200).send(user);
+    return res.status(200).send({ user });
   } catch (error) {
     console.log(error);
   }
@@ -50,14 +50,17 @@ router.post("/login", async (req, res) => {
 router.post("/register", async (req, res) => {
   try {
     const { phone, password } = req.body;
-    const existingNumber = await User.findOne({ phone })
-    if(existingNumber) return res.status(403).send({ message: "Phone Number already linked to an account, continue to login" });
+    const existingNumber = await User.findOne({ phone });
+    if (existingNumber)
+      return res.status(400).send({
+        message: "Phone Number already linked to an account, continue to login",
+      });
     const users = new User({
       phone,
       password,
     });
 
-    const user = await users.save();
+    await users.save();
     return res.status(201).send({ message: "Account created!" });
   } catch (error) {
     console.log(error);

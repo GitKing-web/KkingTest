@@ -7,6 +7,7 @@ const message = document.querySelector("#message");
 const errorMsg = document.querySelector("#error");
 const errorMsgBg = document.querySelector("#error-color");
 const confirmBtn = document.querySelector("#confirm-btn");
+const messageBtn = document.querySelector("#btn-message");
 
 // REGISTER
 const regPhoneNumber = document.querySelector("#regPhone");
@@ -15,6 +16,8 @@ const regCpassword = document.querySelector("#regCpass");
 const regBtn = document.querySelector("#regBtn");
 
 const HandleReg = async () => {
+  loading.style.display = "block";
+
   await fetch("/register", {
     method: "POST",
     headers: {
@@ -27,8 +30,19 @@ const HandleReg = async () => {
   })
     .then((res) => res.json())
     .then((data) => {
-      if (data) {
+      if (data.status === 201) {
+        loading.style.display = "none";
+        errorMsg.style.display = "block";
+        errorMsgBg.style.display = "block";
+        messageBtn.innerHTML = "Ok";
+        message.innerHTML = data.message;
         localStorage.setItem("user", JSON.stringify(data));
+      } else {
+        loading.style.display = "none";
+        errorMsg.style.display = "block";
+        errorMsgBg.style.display = "block";
+        messageBtn.innerHTML = "Ok";
+        message.innerHTML = data.message;
       }
     })
     .catch((error) => console.log(error));
@@ -66,14 +80,17 @@ async function sendToBack(val) {
   })
     .then((res) => res.json())
     .then((data) => {
-      if (data.status == 200) {
+      if (data.user) {
         loading.style.display = "none";
+        console.log(data);
         window.localStorage.setItem("user", JSON.stringify(data));
-        location.replace("/");
-      } else {
+        location.replace("/home");
+      }
+      if (data.message) {
         loading.style.display = "none";
         errorMsg.style.display = "block";
         errorMsgBg.style.display = "block";
+        messageBtn.innerHTML = "Ok";
         message.innerHTML = data.message;
       }
     })

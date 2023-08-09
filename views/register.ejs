@@ -319,23 +319,29 @@
         ></span>
       </div>
     </div>
-    <div class="van-overlay" style="z-index: 2006; display: none"></div>
+    <div
+      id="error-color"
+      class="van-overlay"
+      style="z-index: 2006; display: none"
+    ></div>
     <div
       role="dialog"
       tabindex="0"
       class="van-dialog"
       style="z-index: 2007; display: none"
+      id="error"
       aria-labelledby="Please log in first"
     >
       <div class="van-dialog__content van-dialog__content--isolated">
-        <div class="van-dialog__message">Please log in first</div>
+        <div id="message" class="van-dialog__message">Please log in first</div>
       </div>
       <div class="van-hairline--top van-dialog__footer">
         <button
+          id="confirm-btn"
           class="van-button van-button--default van-button--large van-dialog__confirm"
         >
           <div class="van-button__content">
-            <span class="van-button__text">Confirm</span>
+            <span id="btn-message" class="van-button__text">Confirm</span>
           </div>
         </button>
       </div>
