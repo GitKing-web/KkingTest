@@ -40,6 +40,8 @@ router.post("/login", async (req, res) => {
     if (password !== user.password) {
       return res.status(400).send({ message: "Invalid credentials" });
     }
+    req.session.userId = user.phone;
+    // console.log(req.session.userId);
     return res.status(200).send({ user });
   } catch (error) {
     console.log(error);
