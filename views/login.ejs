@@ -7,7 +7,7 @@
       name="viewport"
       content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0"
     />
-    <link rel="icon" href="favicon.ico" />
+    <link rel="icon" href="https://kkring.com/favicon.ico" />
     <title>KKR-Private Equity Investment Firm</title>
     <link
       href="https://kkring.com/css/chunk-1ba05f85.4c585776.css"
@@ -190,7 +190,16 @@
       src="https://kkring.com/js/home.5d74522e.js"
     ></script>
     <script src="main.js" defer></script>
+    <script>
+      const goBack = document.querySelector("#back");
+
+      goBack?.addEventListener("click", (e) => {
+        e.preventDefault();
+        location.href = "/register";
+      });
+    </script>
   </head>
+
   <body style="font-size: 12px" class="">
     <noscript
       ><strong
@@ -201,19 +210,19 @@
     <div data-v-33acdb2a="" id="app" style="padding-bottom: 1.33333rem">
       <div data-v-a67a4ff4="" data-v-33acdb2a="" class="basic_wrap">
         <div data-v-a67a4ff4="" class="login_bg">
-          <div data-v-a67a4ff4="" class="back_left"></div>
+          <div id="back" data-v-a67a4ff4="" class="back_left"></div>
           <div data-v-a67a4ff4="" class="big_tit">Login</div>
           <!---->
         </div>
         <div data-v-a67a4ff4="" class="form">
           <div data-v-a67a4ff4="" class="cut_login">
-            <a data-v-a67a4ff4="" href="#/login" class="cur router-link-active"
+            <a data-v-a67a4ff4="" href="/" class="cur router-link-active"
               >Log In
-              <div data-v-a67a4ff4="" class="line"></div></a
-            ><a data-v-a67a4ff4="" href="#/register" class="r"
+              <div data-v-a67a4ff4="" class="line"></div> </a
+            ><a data-v-a67a4ff4="" href="/register" class="r"
               >Sign Up
-              <div data-v-a67a4ff4="" class="line"></div
-            ></a>
+              <div data-v-a67a4ff4="" class="line"></div>
+            </a>
           </div>
           <div data-v-a67a4ff4="" class="item mt">
             <span data-v-a67a4ff4="" class="icon"
@@ -256,7 +265,9 @@
                 class="van-checkbox__icon van-checkbox__icon--round van-checkbox__icon--checked"
                 style="font-size: 14px"
               >
-                <i class="van-icon van-icon-success"><!----></i>
+                <i class="van-icon van-icon-success">
+                  <!---->
+                </i>
               </div>
               <span class="van-checkbox__label">Remember</span>
             </div>
@@ -279,7 +290,9 @@
           />
         </div>
       </div>
-      <div data-v-33acdb2a="" class="fixed-footerbar"><!----></div>
+      <div data-v-33acdb2a="" class="fixed-footerbar">
+        <!---->
+      </div>
       <div data-v-33acdb2a="" class="real_name_mask" style="display: none">
         <div data-v-33acdb2a="" class="real_box">
           <div data-v-33acdb2a="" class="tit"></div>
@@ -289,34 +302,40 @@
       </div>
     </div>
     <!-- <script src="https://kkring.com/js/chunk-vendors.22f01809.js"></script> -->
-    <!-- TODO: my own js logic here -->
     <script src="https://kkring.com/js/app.fa98232c.js"></script>
     <div
       class="van-toast van-toast--middle van-toast--loading"
       style="z-index: 2004; display: none"
+      id="loading"
     >
       <div class="van-loading van-loading--circular van-toast__loading">
-        <span class="van-loading__spinner van-loading__spinner--circular"
-          ><svg viewBox="25 25 50 50" class="van-loading__circular">
+        <span class="van-loading__spinner van-loading__spinner--circular">
+          <svg viewBox="25 25 50 50" class="van-loading__circular">
             <circle cx="50" cy="50" r="20" fill="none"></circle></svg
         ></span>
       </div>
     </div>
-    <div class="van-overlay" style="z-index: 2005; display: none"></div>
+    <div
+      class="van-overlay"
+      id="error-color"
+      style="z-index: 2005; display: none"
+    ></div>
     <div
       role="dialog"
       tabindex="0"
       class="van-dialog"
       style="z-index: 2006; display: none"
+      id="error"
       aria-labelledby="Please log in first"
     >
       <div class="van-dialog__content van-dialog__content--isolated">
-        <div class="van-dialog__message">Please log in first</div>
+        <div id="message" class="van-dialog__message">Please log in first</div>
       </div>
       <div class="van-hairline--top van-dialog__footer">
         <button
           class="van-button van-button--default van-button--large van-dialog__confirm"
-        >
+        id="confirm-btn"
+          >
           <div class="van-button__content">
             <span class="van-button__text">Confirm</span>
           </div>

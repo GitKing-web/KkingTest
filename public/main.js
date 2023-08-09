@@ -2,41 +2,46 @@ const loginbtn = document.querySelector("#loginbtn");
 const phone_numberVal = document.querySelector("#phone_number");
 const passwordVal = document.querySelector("#password");
 
+const loading = document.querySelector("#loading");
+const message = document.querySelector("#message");
+const errorMsg = document.querySelector("#error");
+const errorMsgBg = document.querySelector("#error-color");
+const confirmBtn = document.querySelector("#confirm-btn");
+
 // REGISTER
-const regPhoneNumber = document.querySelector('#regPhone');
-const regPassword = document.querySelector('#regPass');
-const regCpassword = document.querySelector('#regCpass');
-const regBtn = document.querySelector('#regBtn');
+const regPhoneNumber = document.querySelector("#regPhone");
+const regPassword = document.querySelector("#regPass");
+const regCpassword = document.querySelector("#regCpass");
+const regBtn = document.querySelector("#regBtn");
 
 const HandleReg = async () => {
-  await fetch('/register', {
-    method: 'POST',
+  await fetch("/register", {
+    method: "POST",
     headers: {
-      'content-type': 'application/json'
+      "content-type": "application/json",
     },
     body: JSON.stringify({
-        phone: regPhoneNumber.value,
-        password: regPassword.value
-      })
+      phone: regPhoneNumber.value,
+      password: regPassword.value,
+    }),
   })
-  .then(res => res.json())
-  .then(data => {
-    if(data){
-      localStorage.setItem("kkring", JSON.stringify(data))
-    }
-  })
-.catch(error => console.log(error))
-}
-regBtn?.addEventListener('click', (e) => {
+    .then((res) => res.json())
+    .then((data) => {
+      if (data) {
+        localStorage.setItem("user", JSON.stringify(data));
+      }
+    })
+    .catch((error) => console.log(error));
+};
+regBtn?.addEventListener("click", (e) => {
   e.preventDefault();
-  if(!regPhoneNumber || !regPassword) return;
-  if(regPassword.value !== regCpassword.value){
-    console.log('passwords did not match');
+  if (!regPhoneNumber || !regPassword) return;
+  if (regPassword.value !== regCpassword.value) {
+    console.log("passwords did not match");
     return;
   }
   HandleReg();
-
-})
+});
 
 loginbtn?.addEventListener("click", (e) => {
   e.preventDefault();
@@ -50,6 +55,8 @@ loginbtn?.addEventListener("click", (e) => {
 });
 
 async function sendToBack(val) {
+  loading.style.display = "block";
+
   await fetch("/login", {
     method: "POST",
     headers: {
@@ -59,10 +66,27 @@ async function sendToBack(val) {
   })
     .then((res) => res.json())
     .then((data) => {
-      if (data) {
+      if (data.status == 200) {
+        loading.style.display = "none";
         window.localStorage.setItem("user", JSON.stringify(data));
         location.replace("/");
+      } else {
+        loading.style.display = "none";
+        errorMsg.style.display = "block";
+        errorMsgBg.style.display = "block";
+        message.innerHTML = data.message;
       }
     })
-    .catch((error) => console.error(error));
+    .catch((error) => {
+      loading.style.display = "none";
+
+      console.error(error);
+    });
+  loading.style.display = "none";
 }
+
+confirmBtn?.addEventListener("click", (e) => {
+  e.preventDefault();
+  errorMsg.style.display = "none";
+  errorMsgBg.style.display = "none";
+});

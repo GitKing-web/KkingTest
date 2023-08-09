@@ -1,16 +1,16 @@
 const { Router } = require("express");
-const User = require('../models/model.User');
+const User = require("../models/model.User");
 const router = Router();
 
 //  GET request
-// home
+//login
 router.get("/", (req, res) => {
-  res.status(200).render("index");
+  res.status(200).render("login");
 });
 
-//login
-router.get("/login", (req, res) => {
-  res.status(200).render("login");
+// home
+router.get("/home", (req, res) => {
+  res.status(200).render("index");
 });
 
 // register
@@ -33,31 +33,30 @@ router.get("/cash/:id", (req, res) => {
 router.post("/login", async (req, res) => {
   try {
     const { phone, password } = req.body;
-    const user = await User.findOne({ phone })
-    if(!user){
-      console.log('Invalid credentials.');
-      return;
+    const user = await User.findOne({ phone });
+    if (!user) {
+      return res.status(400).send({ message: "Invalid credentials" });
     }
-    if(password !== user.password){
-      console.log('Invalid credentials');
-      return;
+    if (password !== user.password) {
+      return res.status(400).send({ message: "Invalid credentials" });
     }
-  return console.log('login successful...');
+    return res.status(200).send(user);
   } catch (error) {
     console.log(error);
   }
 });
 
 // register
-router.post("/register", async(req, res) => {
+router.post("/register", async (req, res) => {
   try {
     const { phone, password } = req.body;
     const users = new User({
-      phone, password
-    })
+      phone,
+      password,
+    });
 
     const user = await users.save();
-    console.log(user);
+    return res.status(201).send({ message: "Account created!" });
   } catch (error) {
     console.log(error);
   }
