@@ -50,6 +50,8 @@ router.post("/login", async (req, res) => {
 router.post("/register", async (req, res) => {
   try {
     const { phone, password } = req.body;
+    const existingNumber = await User.findOne({ phone })
+    if(existingNumber) return res.status(403).send({ message: "Phone Number already linked to an account, continue to login" });
     const users = new User({
       phone,
       password,
