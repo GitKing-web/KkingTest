@@ -108,6 +108,9 @@ router.post("/login", async (req, res) => {
 router.post("/register", async (req, res) => {
   try {
     const { phone, password } = req.body;
+    if(phone <= 10 || phone > 11) {
+      res.status(405).send({ message: "Please enter a valid phone number"})
+    }
     const existingNumber = await User.findOne({ phone });
     if (existingNumber)
       return res.status(400).send({
