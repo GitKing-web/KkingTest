@@ -51,7 +51,10 @@ regBtn?.addEventListener("click", (e) => {
   e.preventDefault();
   if (!regPhoneNumber || !regPassword) return;
   if (regPassword.value !== regCpassword.value) {
-    console.log("passwords did not match");
+    errorMsg.style.display = "block";
+    errorMsgBg.style.display = "block";
+    message.innerHTML = "passwords did not match";
+    messageBtn.innerHTML = "Ok";
     return;
   }
   HandleReg();
@@ -94,10 +97,8 @@ async function sendToBack(val) {
         message.innerHTML = data.message;
       }
     })
-    .catch((error) => {
+    .catch(() => {
       loading.style.display = "none";
-
-      console.error(error);
     });
   loading.style.display = "none";
 }
