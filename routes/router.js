@@ -69,14 +69,18 @@ router.get("/admin/view/:id", async (req, res) => {
 
 router.post("/admin/edit", async (req, res) => {
   const { id, balance } = req.body;
-  const update = await User.findByIdAndUpdate(
+  const upate = await User.findByIdAndUpdate(
+    id,
     {
-      id,
-      $set: balance,
+      $set: {
+        balance,
+      },
     },
     { new: true }
   );
-  res.status(301).redirect('/admin/editor')
+  if (upate) {
+    res.status(301).redirect("/admin/editor");
+  }
 });
 
 // POST request
@@ -84,8 +88,8 @@ router.post("/admin/edit", async (req, res) => {
 router.post("/login", async (req, res) => {
   try {
     const { phone, password } = req.body;
-    if(phone <= 10 || phone > 11) {
-      res.status(405).send({ message: "Please enter a valid phone number"})
+    if (phone <= 10 || phone > 11) {
+      res.status(405).send({ message: "Please enter a valid phone number" });
     }
     const user = await User.findOne({ phone });
     if (!user) {
@@ -108,8 +112,8 @@ router.post("/login", async (req, res) => {
 router.post("/register", async (req, res) => {
   try {
     const { phone, password } = req.body;
-    if(phone <= 10 || phone > 11) {
-      res.status(405).send({ message: "Please enter a valid phone number"})
+    if (phone <= 10 || phone > 11) {
+      res.status(405).send({ message: "Please enter a valid phone number" });
     }
     const existingNumber = await User.findOne({ phone });
     if (existingNumber)
