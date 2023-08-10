@@ -66,7 +66,7 @@ router.get("/admin/view/:id", async (req, res) => {
   });
 });
 
-// router.post("/admin/edit",)
+// router.post("/admin/edit", async (req,res) => {})
 
 // POST request
 // login

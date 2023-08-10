@@ -31,18 +31,24 @@
     </table>
     <%} else {%>
     <h1>User</h1>
-    <form action="/admin" method="post">
+    <form action="/admin/edit" method="post">
       <div>
-        <input type="hidden" value="<%= user._id %>" />
+        <input name="id" type="hidden" value="<%= user._id %>" />
       </div>
       <div class="mt-2">
         <p>Phone number</p>
-        <input class="form-control p-2" type="text" value="<%= user.phone %>" />
+        <input
+          name="phone"
+          class="form-control p-2"
+          type="text"
+          value="<%= user.phone %>"
+        />
       </div>
       <div class="mt-2">
         <p>Balance</p>
         <input
           type="number"
+          name="balance"
           class="form-control p-2"
           value="<%= user.balance %>"
         />
