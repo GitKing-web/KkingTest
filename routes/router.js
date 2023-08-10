@@ -88,8 +88,9 @@ router.post("/admin/edit", async (req, res) => {
 router.post("/login", async (req, res) => {
   try {
     const { phone, password } = req.body;
-    if (phone <= 10 || phone > 11) {
+    if (phone.length !== 11 ) {
       res.status(405).send({ message: "Please enter a valid phone number" });
+      return;
     }
     const user = await User.findOne({ phone });
     if (!user) {
