@@ -5,27 +5,46 @@ const router = Router();
 //  GET request
 //login
 router.get("/", (req, res) => {
-  res.status(200).render("login");
+  if (req.session.isLoggedIn) {
+    res.status(301).redirect("/home");
+  } else {
+    return res.status(200).render("login");
+  }
 });
 
 // home
 router.get("/home", (req, res) => {
-  res.status(200).render("index");
+  if (req.session.isLoggedIn) {
+    return res.status(200).render("index");
+  }
+  return res.redirect("/");
 });
 
 // register
 router.get("/register", (req, res) => {
-  res.status(200).render("register");
+  return res.status(200).render("register");
 });
 
 // profile
-router.get("/profile/:id", (req, res) => {
-  res.status(200).render("profile");
+router.get("/profile", (req, res) => {
+  if (req.session.isLoggedIn) {
+    return res.status(200).render("profile", {
+      user: req.session.user,
+    });
+  } else {
+    return res.redirect("/");
+  }
 });
 
 // cash
-router.get("/cash/:id", (req, res) => {
-  res.status(200).render("cash");
+router.get("/cash", (req, res) => {
+  if (req.session.isLoggedIn) {
+    return res.status(200).render("cash", {
+      user: req.session.user,
+    });
+  } else {
+    return res.redirect("/");
+  }
 });
 
 // POST request
@@ -40,7 +59,8 @@ router.post("/login", async (req, res) => {
     if (password !== user.password) {
       return res.status(400).send({ message: "Invalid credentials" });
     }
-    req.session.userId = user.phone;
+    req.session.isLoggedIn = true;
+    req.session.user = user;
     // console.log(req.session.userId);
     return res.status(200).send({ user });
   } catch (error) {

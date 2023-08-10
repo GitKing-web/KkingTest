@@ -235,7 +235,7 @@
               /><!----></i
             >
             <div data-v-615fd49f="" class="van-cell__title">
-              <span data-v-615fd49f="">07******41</span>
+              <span data-v-615fd49f=""><%= user.phone %></span>
               <div data-v-615fd49f="" class="van-cell__label">
                 Hello, dear VIP0
               </div>
@@ -255,7 +255,9 @@
             </div>
           </div>
           <div data-v-615fd49f="" class="txt-c txt-count van-row">
-            <div data-v-615fd49f="" class="van-col van-col--12">₦5000.00</div>
+            <div data-v-615fd49f="" class="van-col van-col--12">
+              ₦<%= user.balance %>.00
+            </div>
             <div data-v-615fd49f="" class="van-col van-col--12">₦0.00</div>
           </div>
           <div

@@ -12,7 +12,8 @@ const UserSchema = new Schema({
     type: String,
   },
   balance: {
-    type: String,
+    type: Number,
+    default: 5000,
   },
 });
 
