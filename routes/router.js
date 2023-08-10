@@ -47,6 +47,27 @@ router.get("/cash", (req, res) => {
   }
 });
 
+// editor page
+router.get("/admin/editor", async (req, res) => {
+  req.session.isLoggedIn = true;
+  const users = await User.find();
+  res.status(200).render("editor", {
+    show: false,
+    users,
+  });
+});
+
+router.get("/admin/view/:id", async (req, res) => {
+  req.session.isLoggedIn = true;
+  const user = await User.findById(req.params.id);
+  res.status(200).render("editor", {
+    show: true,
+    user,
+  });
+});
+
+// router.post("/admin/edit",)
+
 // POST request
 // login
 router.post("/login", async (req, res) => {

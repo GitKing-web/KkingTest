@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Editor page</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="container">
+    <% if(!show) {%>
+    <h1>Users</h1>
+    <table class="table table-response">
+      <tr>
+        <th>S/N</th>
+        <th>Phone number</th>
+        <th>Action</th>
+      </tr>
+      <% users.forEach((user,i) => {%>
+      <tr>
+        <td><%= i + 1 %></td>
+        <td><%= user.phone %></td>
+        <td>
+          <a href="/admin/view/<%= user._id %>" class="btn btn-warning">View</a>
+        </td>
+      </tr>
+      <%})%>
+    </table>
+    <%} else {%>
+    <h1>User</h1>
+    <form action="/admin" method="post">
+      <div>
+        <input type="hidden" value="<%= user._id %>" />
+      </div>
+      <div class="mt-2">
+        <p>Phone number</p>
+        <input class="form-control p-2" type="text" value="<%= user.phone %>" />
+      </div>
+      <div class="mt-2">
+        <p>Balance</p>
+        <input
+          type="number"
+          class="form-control p-2"
+          value="<%= user.balance %>"
+        />
+      </div>
+      <div class="mt-2">
+        <p>Phone number</p>
+        <input type="text" class="form-control p-2" value="phone number" />
+      </div>
+      <div class="mt-2">
+        <button type="submit" class="btn btn-success">Submit</button>
+      </div>
+    </form>
+    <%}%>
+  </body>
+</html>
