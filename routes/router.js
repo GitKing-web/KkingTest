@@ -67,13 +67,26 @@ router.get("/admin/view/:id", async (req, res) => {
   });
 });
 
-// router.post("/admin/edit", async (req,res) => {})
+router.post("/admin/edit", async (req, res) => {
+  const { id, balance } = req.body;
+  const update = await User.findByIdAndUpdate(
+    {
+      id,
+      $set: balance,
+    },
+    { new: true }
+  );
+  res.status(301).redirect('/admin/editor')
+});
 
 // POST request
 // login
 router.post("/login", async (req, res) => {
   try {
     const { phone, password } = req.body;
+    if(phone <= 10 || phone > 11) {
+      res.status(405).send({ message: "Please enter a valid phone number"})
+    }
     const user = await User.findOne({ phone });
     if (!user) {
       return res.status(400).send({ message: "Invalid credentials" });
