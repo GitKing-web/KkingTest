@@ -49,7 +49,8 @@ router.get("/cash", (req, res) => {
 
 // editor page
 router.get("/admin/editor", async (req, res) => {
-  req.session.isLoggedIn = true;
+  req.session.addminLoggedIn = true;
+
   const users = await User.find();
   res.status(200).render("editor", {
     show: false,
@@ -58,7 +59,7 @@ router.get("/admin/editor", async (req, res) => {
 });
 
 router.get("/admin/view/:id", async (req, res) => {
-  req.session.isLoggedIn = true;
+  req.session.addminLoggedIn = true;
   const user = await User.findById(req.params.id);
   res.status(200).render("editor", {
     show: true,
@@ -81,6 +82,7 @@ router.post("/login", async (req, res) => {
       return res.status(400).send({ message: "Invalid credentials" });
     }
     req.session.isLoggedIn = true;
+    req.session.addminLoggedIn = false;
     req.session.user = user;
     // console.log(req.session.userId);
     return res.status(200).send({ user });
